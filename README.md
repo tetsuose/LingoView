@@ -18,12 +18,13 @@ web/           # React/Vite 前端工程
 ## 快速开始
 
 1. 安装 [pnpm](https://pnpm.io/installation) 与 Python 3.10+。
-2. 可执行 `./start.sh`，同时启动 FastAPI 服务（默认端口 8000）与 Vite 前端（默认端口 5173）。
-3. 手动启动：
+2. 首次运行可执行 `scripts/bootstrap.sh` 自动安装前后端依赖并生成本地 `.env`/`web/.env` 示例。
+3. 可执行 `./start.sh`，同时启动 FastAPI 服务（默认端口 8000）与 Vite 前端（默认端口 5173）。
+4. 手动启动：
    - 后端：`cd python && ./run_api.sh`
    - 前端：`cd web && pnpm install && pnpm dev`
-4. 后端测试：`cd python && pytest`
-5. 前端测试与构建：`cd web && pnpm test -- --run && pnpm build`
+5. 后端测试：`cd python && pytest`
+6. 前端测试与构建：`cd web && pnpm test -- --run && pnpm build`
 
 > 如需改用 OpenAI Whisper API，可设置 `.env` 中的 `WHISPER_BACKEND=openai` 并提供 `OPENAI_API_KEY`；默认使用本地 faster-whisper。
 
