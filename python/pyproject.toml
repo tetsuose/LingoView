@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lingoview-service"
+version = "0.0.1"
+description = "LingoView backend services for transcription, translation, and tokenization"
+readme = "README.md"
+authors = [{ name = "LingoView Team" }]
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.10"
+dependencies = [
+  "typer>=0.12",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.6",
+  "setuptools>=65",
+  "httpx>=0.27",
+  "python-dotenv>=1.0",
+  "requests>=2.32",
+  "rich>=13.7",
+  "fugashi>=1.3",
+  "sudachipy>=0.6",
+  "sudachidict-core>=202401",  # tokenizer dictionary
+  "pykakasi>=2.3",
+  "mecab-python3>=1.0",
+  "soundfile>=0.12",
+  "numpy>=1.26",
+  "aiofiles>=23.2",
+  "uvicorn>=0.30",
+  "fastapi>=0.112",
+  "faster-whisper>=1.0",
+  "webrtcvad>=2.0",
+  "streamlit>=1.37",
+  "pandas>=2.2"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3",
+  "pytest-asyncio>=0.23",
+  "ruff>=0.5"
+]
+
+[project.scripts]
+lingoview-cli = "lingoview_service.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lingoview_service*"]
+
+[project.urls]
+Homepage = "https://github.com/tetsuose/LingoView"
+Repository = "https://github.com/tetsuose/LingoView.git"
+Issues = "https://github.com/tetsuose/LingoView/issues"
+
+[tool.ruff]
+line-length = 100
+
+[tool.typer]
+pretty_exceptions_enable = true
