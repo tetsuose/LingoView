@@ -1,6 +1,6 @@
 # LingoView
 
-LingoView 是一款面向语言学习的字幕生成与翻译工具，使用 Python (FastAPI) 后端 + React/Vite 前端架构。项目提供本地 `faster-whisper` 字幕生成、OpenAI/Grok/DeepSeek 翻译、词法分析与离线词典构建能力。
+LingoView 是一款面向语言学习的字幕生成与翻译工具，使用 Python (FastAPI) 后端 + React/Vite 前端架构。项目提供本地 `faster-whisper` 字幕生成、OpenAI 翻译、词法分析与离线词典构建能力。
 
 ## 目录结构
 
@@ -42,9 +42,8 @@ web/           # React/Vite 前端工程
 
 ## 参考与改进
 
-- 翻译模块借鉴了 [umlx5h/LLPlayer](https://github.com/umlx5h/LLPlayer) 的 prompt 策略，并在 `python/lingoview_service/translate.py` 实现上下文增强。
+- 翻译模块在 `python/lingoview_service/translate.py` 实现上下文增强，仅支持 OpenAI 翻译（默认 `gpt-4.1-mini`，可通过 `.env` 的 `OPENAI_TRANSLATE_MODEL` 调整）。
 - 音频识别采用 WebRTC VAD + `faster-whisper` 分片推理（`python/lingoview_service/vad.py` 与 `transcribe.py`）。
 - `scripts/dictionaries/build.ts` 提供 Kaikki + JMdict + CC-CEDICT 的离线词典构建流程。
-- 默认翻译提供者为 OpenAI `gpt-4.1-mini`；如需切换可通过 `.env` 设置 `TRANSLATOR_PROVIDER`（`gpt`/`grok`/`deepseek` 等），并相应配置 `OPENAI_TRANSLATE_MODEL`、`GROK_MODEL` 等参数。
 - 支持通过 `WHISPER_BACKEND` 切换本地推理（`local`）或 OpenAI Whisper API（`openai`）；后者需设置 `OPENAI_API_KEY`，可选 `OPENAI_WHISPER_MODEL` 与 `OPENAI_API_BASE`。
 - 默认启用 Demucs 人声分离（`ENABLE_VOCAL_SEPARATION=true`）。请在虚拟环境中 `pip install demucs`，首次使用时执行 `demucs --two-stems=vocals -n htdemucs <音频文件>` 或直接运行字幕生成流程，以便自动下载模型；如需关闭，可设置 `ENABLE_VOCAL_SEPARATION=false`。
