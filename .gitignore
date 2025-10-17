@@ -23,3 +23,12 @@ resources/
 *.pkg
 *.zip
 *.tar.gz
+
+# Python build & caches
+python/build/
+python/tmp-storage/
+python/**/*.egg-info/
+python/**/__pycache__/
+
+# Web build output
+web/dist/
