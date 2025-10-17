@@ -1,0 +1,26 @@
+name: Mark stale issues and PRs
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          days-before-stale: 60
+          days-before-close: 7
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
+          exempt-issue-labels: 'pinned,security'
+          exempt-pr-labels: 'pinned,security'
+          stale-issue-message: >-
+            该 Issue 已 60 天无活动，将在 7 天后自动关闭。如仍需跟进请回复或更新信息。
+          stale-pr-message: >-
+            该 PR 已 60 天无活动，将在 7 天后自动关闭。如仍需合并请更新分支或补充说明。

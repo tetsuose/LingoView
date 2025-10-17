@@ -1,0 +1,17 @@
+area:web:
+  - 'web/**'
+area:backend:
+  - 'python/**'
+docs:
+  - 'docs/**'
+  - 'README.md'
+ci:
+  - '.github/**'
+scripts:
+  - 'scripts/**'
+resources:
+  - 'resources/**'
+dependencies:
+  - 'pnpm-lock.yaml'
+  - 'python/pyproject.toml'
+  - 'web/package.json'
