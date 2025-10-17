@@ -5,6 +5,38 @@
 
 LingoView 是一款面向语言学习的字幕生成与翻译工具，使用 Python (FastAPI) 后端 + React/Vite 前端架构。项目提供本地 `faster-whisper` 字幕生成、OpenAI 翻译、词法分析与离线词典构建能力。
 
+## 新手指南（最少步骤）
+
+- 下载项目
+  - 方式一：页面右上角 “Code → Download ZIP” 并解压
+  - 方式二：`git clone https://github.com/tetsuose/LingoView.git`
+- 安装前置
+  - macOS（推荐）：
+    ```bash
+    brew install python@3.11 node ffmpeg
+    corepack enable   # 启用 pnpm（Node 自带）
+    ```
+  - Ubuntu（示例）：
+    ```bash
+    # 安装 Python/ffmpeg
+    sudo apt update && sudo apt install -y python3.11 python3.11-venv ffmpeg curl
+    # 安装 Node 20（使用 NodeSource）
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+    sudo apt install -y nodejs
+    sudo npm i -g corepack && corepack enable   # 启用 pnpm
+    ```
+- 一键初始化与启动（仓库根目录执行）：
+  ```bash
+  scripts/bootstrap.sh   # 首次初始化：创建 python/.venv、安装依赖、生成 .env 与 web/.env
+  ./start.sh             # 同时启动后端(8000) 与前端(5173)
+  ```
+- 使用提示
+  - 访问前端：`http://localhost:5173`；后端：`http://localhost:8000`
+  - 翻译需在 `.env` 填写 `OPENAI_API_KEY=...`；未配置时仅生成原文字幕
+  - 默认使用 `faster-whisper` 的 `large-v2` 模型；首次运行会自动下载模型（体积较大）。不建议改为 `small`/`base`，否则识别质量会明显下降
+  - 导出文件保存在 `~/.cache/lingoview/exports/`，亦可通过后端 `/exports/...` 下载
+  - 停止：在运行窗口按 `Ctrl+C`
+
 ## 目录结构
 
 ```
