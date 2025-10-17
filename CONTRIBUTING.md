@@ -16,9 +16,9 @@ Use conventional commits when possible:
 - `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `ci:`
 
 ## Pull Requests
-- Describe the motivation and approach concisely.
-- Include screenshots or logs for UI/UX or CLI changes when helpful.
-- Keep PRs focused. Prefer multiple small PRs over one large PR.
+- Keep PRs focused; small PRs merge faster.
+- CI must pass (web build/lint + basic backend tests). CodeQL 结果供参考，不阻塞合并。
+- 目前不强制签名提交；如你愿意，可使用 GPG/SSH 提交签名。
 
 ## Issues
 - Bug report: include OS, steps to reproduce, expected vs actual behavior, logs.
