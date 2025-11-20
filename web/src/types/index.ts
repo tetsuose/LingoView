@@ -16,6 +16,14 @@ export interface DownloadEntry {
     url: string;
 }
 
+export interface DictionaryResult {
+    word: string;
+    definition: string;
+    part_of_speech?: string | null;
+    pronunciation?: string | null;
+    example?: string | null;
+}
+
 export interface ApiResponse {
     jobId: string;
     videoUrl: string | null;

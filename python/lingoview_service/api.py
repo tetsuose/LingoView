@@ -7,30 +7,46 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from .config import load_settings
+from .dictionary import DictionaryResult, lookup_word_in_context
 from .exports import compute_source_hash, find_cached_result, prepare_and_save_exports
 from .pipeline import SubtitlePipeline
+from .tokenizer import get_tokenizer
 
 settings = load_settings()
-app = FastAPI(title="LingoView API")
+app = FastAPI()
 
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:5174",
-]
-
+# CORS Setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if not origins else origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+class DictionaryRequest(BaseModel):
+    word: str
+    context: str
+    source_lang: str = "auto"
+    target_lang: str = "zh"
+
+
+@app.post("/api/dictionary/lookup", response_model=DictionaryResult)
+async def lookup_dictionary(request: DictionaryRequest):
+    return await lookup_word_in_context(
+        word=request.word,
+        context=request.context,
+        source_lang=request.source_lang,
+        target_lang=request.target_lang,
+    )
+
 
 exports_dir = settings.storage_dir / "exports"
 exports_dir.mkdir(parents=True, exist_ok=True)

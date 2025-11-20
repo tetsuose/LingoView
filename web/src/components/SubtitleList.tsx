@@ -9,6 +9,7 @@ interface SubtitleListProps {
     listRef: RefObject<HTMLDivElement | null>;
     translationLabel: string | null;
     loading: boolean;
+    onTokenClick: (token: string, context: string) => void;
 }
 
 function formatTimestamp(value: number): string {
@@ -21,7 +22,12 @@ function formatTimestamp(value: number): string {
     return `${minutes}:${seconds}`;
 }
 
-const renderTokens = (tokens?: TokenDetail[] | null, fallback?: string) => {
+const renderTokens = (
+    tokens: TokenDetail[] | undefined | null,
+    fallback: string | undefined,
+    context: string,
+    onTokenClick: (token: string, context: string) => void,
+) => {
     if (!tokens || tokens.length === 0) {
         return <p className="subtitle-item__text">{fallback}</p>;
     }
@@ -29,7 +35,22 @@ const renderTokens = (tokens?: TokenDetail[] | null, fallback?: string) => {
     return (
         <div className="subtitle-item__tokens">
             {tokens.map((token, idx) => (
-                <span className="subtitle-token" key={`${token.surface}-${idx}`}>
+                <span
+                    className="subtitle-token"
+                    key={`${token.surface}-${idx}`}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onTokenClick(token.surface, context);
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.stopPropagation();
+                            onTokenClick(token.surface, context);
+                        }
+                    }}
+                >
                     <span className="subtitle-token__surface">{token.surface}</span>
                     {token.romaji ? (
                         <span className="subtitle-token__romaji">{token.romaji}</span>
@@ -49,6 +70,7 @@ export function SubtitleList({
     listRef,
     translationLabel,
     loading,
+    onTokenClick,
 }: SubtitleListProps): ReactElement {
 
     useEffect(() => {
@@ -71,11 +93,11 @@ export function SubtitleList({
                     <button type="button" onClick={() => handleSubtitleClick(index)}>
                         {formatTimestamp(segment.start)} → {formatTimestamp(segment.end)}
                     </button>
-                    {renderTokens(segment.tokens, segment.text)}
+                    {renderTokens(segment.tokens, segment.text, segment.text, onTokenClick)}
                     {translation && (
                         <div className="subtitle-item__translation">
                             {translationLabel ? <span className="subtitle-translation__label">{translationLabel}</span> : null}
-                            {renderTokens(translation.tokens, translation.text)}
+                            {renderTokens(translation.tokens, translation.text, translation.text, onTokenClick)}
                         </div>
                     )}
                 </div>

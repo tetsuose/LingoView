@@ -5,7 +5,7 @@ import { DictionaryPanel } from './components/DictionaryPanel';
 import { SubtitleList } from './components/SubtitleList';
 import { UploadForm } from './components/UploadForm';
 import { VideoPlayer } from './components/VideoPlayer';
-import { type ApiResponse, type DownloadEntry, type Segment } from './types';
+import { type ApiResponse, type DictionaryResult, type DownloadEntry, type Segment } from './types';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000';
 
@@ -34,6 +34,11 @@ function App(): ReactElement {
   const objectUrlRef = useRef<string | null>(null);
   const [currentHash, setCurrentHash] = useState<string | null>(null);
   const [fetchingCached, setFetchingCached] = useState(false);
+
+  // Dictionary State
+  const [dictionaryData, setDictionaryData] = useState<DictionaryResult | null>(null);
+  const [dictionaryLoading, setDictionaryLoading] = useState(false);
+  const [dictionaryError, setDictionaryError] = useState<string | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -158,6 +163,26 @@ function App(): ReactElement {
     video.play().catch(() => undefined);
   };
 
+  const handleTokenClick = async (token: string, context: string) => {
+    setDictionaryLoading(true);
+    setDictionaryError(null);
+    setDictionaryData(null);
+
+    try {
+      const { data } = await axios.post<DictionaryResult>(`${API_BASE}/api/dictionary/lookup`, {
+        word: token,
+        context: context,
+        target_lang: 'zh', // Default to Chinese explanation
+      });
+      setDictionaryData(data);
+    } catch (err) {
+      console.error(err);
+      setDictionaryError('查询失败，请稍后再试。');
+    } finally {
+      setDictionaryLoading(false);
+    }
+  };
+
   const handleFileChange = async (selectedFile: File | null) => {
     setFile(selectedFile);
 
@@ -228,7 +253,11 @@ function App(): ReactElement {
         <div className="app__main-column">
           <VideoPlayer videoRef={videoRef} videoSrc={videoSrc} />
 
-          <DictionaryPanel />
+          <DictionaryPanel
+            data={dictionaryData}
+            loading={dictionaryLoading}
+            error={dictionaryError}
+          />
 
           {downloads && Object.keys(downloads).length > 0 && (
             <div className="downloads downloads--inline">
@@ -254,6 +283,7 @@ function App(): ReactElement {
             listRef={listRef}
             translationLabel={translationLabel}
             loading={loading}
+            onTokenClick={handleTokenClick}
           />
         </div>
       </div>
