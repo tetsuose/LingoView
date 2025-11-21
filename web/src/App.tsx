@@ -85,6 +85,16 @@ function App(): ReactElement {
     setSegments(data.segments ?? []);
     setTranslationLanguage(data.translationLanguage ?? null);
     setTranslatedSegments(data.translatedSegments ?? []);
+
+    if (data.videoUrl) {
+      setVideoSrc(`${API_BASE}${data.videoUrl}`);
+      // Revoke old object URL to free memory
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
+      }
+    }
+
     const mappedDownloads = Object.fromEntries(
       Object.entries(data.downloads ?? {})
         .filter(([, entry]) => Boolean(entry.url))

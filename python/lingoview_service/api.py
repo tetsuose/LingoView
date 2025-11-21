@@ -114,12 +114,35 @@ async def transcribe(
 
         media_title = Path(file.filename).stem if file.filename else None
         pipeline = SubtitlePipeline(settings=settings)
+        
+        # Prepare conversion task if needed
+        conversion_task = None
+        mp4_path = None
+        if suffix.lower() != ".mp4":
+            mp4_filename = f"{source_hash}.mp4"
+            mp4_path = exports_dir / mp4_filename
+            if not mp4_path.exists():
+                from .media_processing import convert_video_to_mp4
+                conversion_task = convert_video_to_mp4(media_path, mp4_path)
+
         try:
-            result = await pipeline.generate(
-                media_path,
-                target_language or None,
-                media_title=media_title,
-            )
+            # Run transcription and conversion concurrently
+            if conversion_task:
+                result, conversion_success = await asyncio.gather(
+                    pipeline.generate(
+                        media_path,
+                        target_language or None,
+                        media_title=media_title,
+                    ),
+                    conversion_task
+                )
+            else:
+                result = await pipeline.generate(
+                    media_path,
+                    target_language or None,
+                    media_title=media_title,
+                )
+
         except Exception as exc:  # pragma: no cover - runtime errors
             raise HTTPException(status_code=500, detail=str(exc)) from exc
 
@@ -129,6 +152,10 @@ async def transcribe(
             source_hash=source_hash,
             original_name=file.filename or "upload",
         )
+        
+        video_url = None
+        if mp4_path and mp4_path.exists():
+             video_url = f"/exports/{mp4_path.name}"
     finally:
         try:
             Path(temp_file.name).unlink(missing_ok=True)
@@ -137,7 +164,7 @@ async def transcribe(
 
     response = {
         "jobId": job_id,
-        "videoUrl": None,
+        "videoUrl": video_url,
         "language": result.language,
         "segments": [
             {
