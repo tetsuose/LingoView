@@ -370,74 +370,55 @@ button {
 
 .app__dictionary-panel {
   background-color: var(--card-bg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--card-shadow);
+/* Dictionary Panel */
+.dictionary-panel {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
   padding: 20px;
-  flex: 1;
-  min-height: 250px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  height: 100%;
   overflow-y: auto;
 }
 
-.app__dictionary-panel h2 {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+.dictionary-panel h2 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--text-primary);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  padding-bottom: 10px;
+  margin-bottom: 16px;
 }
 
-.dictionary-loading {
-  color: var(--text-secondary);
-  font-style: italic;
-}
-
-.dictionary-error {
-  color: #ff3b30;
-}
-
-.dictionary-header {
+.dictionary-result {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 5px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.dictionary-word {
-  font-size: 1.5rem;
+.dictionary-result__word {
+  font-size: 24px;
   font-weight: 700;
   color: var(--accent-color);
-  margin: 0;
 }
 
-.dictionary-pronunciation {
+.dictionary-result__pronunciation {
   font-family: monospace;
   color: var(--text-secondary);
+  font-size: 14px;
 }
 
-.dictionary-pos {
-  display: inline-block;
-  background-color: rgba(0, 122, 255, 0.1);
-  color: var(--accent-color);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  margin-bottom: 10px;
-}
-
-.dictionary-definition {
-  font-size: 1.1rem;
+.dictionary-result__definition {
+  font-size: 16px;
   line-height: 1.5;
-  margin-bottom: 15px;
+  color: var(--text-primary);
 }
 
-.dictionary-example {
-  background-color: rgba(0, 0, 0, 0.03);
-  padding: 10px;
+.dictionary-result__example {
+  background: rgba(0, 0, 0, 0.03);
+  padding: 12px;
   border-radius: 8px;
-  font-size: 0.95rem;
-}
-
-.dictionary-example strong {
   display: block;
   margin-bottom: 5px;
   color: var(--text-secondary);
