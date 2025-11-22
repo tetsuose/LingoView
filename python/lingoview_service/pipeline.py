@@ -252,13 +252,6 @@ class SubtitlePipeline:
             translated_segments,
         )
 
-        # Shift timestamps by -0.5s as requested to compensate for VAD/Whisper latency
-        # This ensures the audio start matches the subtitle start better.
-        offset = -0.5
-        segments = self._shift_segments(segments, offset)
-        if translated_segments:
-            translated_segments = self._shift_segments(translated_segments, offset)
-
         return SubtitleResult(
             segments=segments,
             language=dominant_language,
@@ -648,40 +641,3 @@ class SubtitlePipeline:
             return ""
         cleaned = self._overlap_cleanup_re.sub("", value)
         return cleaned.lower()
-
-    def _shift_segments(
-        self,
-        segments: List[SubtitleSegment],
-        offset: float,
-    ) -> List[SubtitleSegment]:
-        if not segments:
-            return []
-        
-        shifted: List[SubtitleSegment] = []
-        for seg in segments:
-            new_start = max(0.0, seg.start + offset)
-            new_end = max(0.0, seg.end + offset)
-            
-            # If the segment is completely shifted out (e.g. was very short at the start),
-            # we might want to keep it or discard it. 
-            # For -0.5s shift, usually it's fine.
-            # We should ensure end > start.
-            if new_end <= new_start:
-                # If shifting caused it to collapse (unlikely with negative offset unless it was < 0.5s at 0.0)
-                # Let's just keep duration if possible, or clamp end.
-                # Actually, if start was 0.2 and end was 0.4, offset -0.5 -> start 0, end 0.
-                # We should probably skip empty segments.
-                if seg.end > seg.start:
-                     # Maintain duration if possible? No, just shift.
-                     pass
-            
-            if new_end > new_start:
-                shifted.append(
-                    SubtitleSegment(
-                        start=new_start,
-                        end=new_end,
-                        text=seg.text,
-                        tokens=seg.tokens,
-                    )
-                )
-        return shifted
