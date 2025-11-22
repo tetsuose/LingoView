@@ -163,25 +163,26 @@ button {
   gap: 2rem;
   padding: 1.75rem 2rem;
   align-items: start;
-  /* Removed fixed height to allow page scrolling */
+  height: calc(100vh - 80px);
+  /* Fixed height for split pane */
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .app__main-column {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  /* Removed internal scrolling */
+  overflow-y: auto;
+  /* Independent scrolling for left column */
   padding-right: 0.5rem;
+  height: 100%;
 }
 
 .app__side-column {
   display: flex;
   flex-direction: column;
-  /* Make sidebar sticky so it stays visible while scrolling main content */
-  position: sticky;
-  top: 90px;
-  height: calc(100vh - 120px);
+  height: 100%;
   overflow: hidden;
 }
 
@@ -236,13 +237,6 @@ button {
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
-  position: sticky;
-  top: 90px;
-  z-index: 10;
-  background: var(--bg-color);
-  /* Prevent transparency issues when scrolling */
-  padding-bottom: 1rem;
-  /* Add some spacing */
 }
 
 .video-player {
