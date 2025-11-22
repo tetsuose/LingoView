@@ -77,9 +77,22 @@ export function SubtitleList({
         if (activeIndex < 0) return;
         const container = listRef.current;
         const element = container?.querySelector<HTMLDivElement>(`[data-index="${activeIndex}"]`);
-        if (!container || !element) return;
 
-        element.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        if (container && element) {
+            // Calculate the position to center the element
+            const containerHeight = container.clientHeight;
+            const elementHeight = element.clientHeight;
+            const elementTop = element.offsetTop;
+
+            // Target scroll position: element top - (half container height - half element height)
+            // This centers the element in the container
+            const targetScrollTop = elementTop - (containerHeight / 2) + (elementHeight / 2);
+
+            container.scrollTo({
+                top: targetScrollTop,
+                behavior: 'smooth'
+            });
+        }
     }, [activeIndex, listRef]);
 
     return (
