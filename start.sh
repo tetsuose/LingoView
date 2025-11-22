@@ -15,10 +15,10 @@ cd "$ROOT/python"
 
 if [[ -f ".venv/bin/activate" ]]; then
   VENV_DIR=".venv"
-elif [[ -f ".venv310/bin/activate" ]]; then
-  VENV_DIR=".venv310"
+elif [[ -f ".venv/bin/activate" ]]; then
+  VENV_DIR=".venv"
 else
-  echo "Virtualenv not found at $ROOT/python/$VENV_DIR. Please run 'python3.10 -m venv $VENV_DIR' and install dependencies." >&2
+  echo "Virtualenv not found at $ROOT/python/$VENV_DIR. Please run 'python3 -m venv $VENV_DIR' and install dependencies." >&2
   exit 1
 fi
 

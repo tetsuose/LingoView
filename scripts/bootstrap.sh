@@ -17,11 +17,11 @@ cd "$ROOT/python"
 if [[ ! -d .venv ]]; then
   python3 -m venv .venv
 fi
-source .venv/bin/activate
-python -m pip install --upgrade pip
+# source .venv/bin/activate # relying on explicit path instead
+.venv/bin/python3 -m pip install --upgrade pip
 echo "[bootstrap] 安装后端依赖 (含开发依赖)..."
-python -m pip install -e .[dev]
-deactivate
+.venv/bin/python3 -m pip install -e .[dev]
+# deactivate
 
 cd "$ROOT"
 

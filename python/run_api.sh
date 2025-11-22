@@ -19,4 +19,9 @@ if [[ -z "${VIRTUAL_ENV:-}" ]]; then
 fi
 
 echo "API logs will be written to: $LOG_FILE"
-uvicorn lingoview_service.api:app --host 0.0.0.0 --port 8000 --reload 2>&1 | tee "$LOG_FILE"
+if [[ -f "$ROOT/.venv/bin/python3" ]]; then
+  PYTHON_EXEC="$ROOT/.venv/bin/python3"
+else
+  PYTHON_EXEC="python3"
+fi
+"$PYTHON_EXEC" -m uvicorn lingoview_service.api:app --host 0.0.0.0 --port 8000 --reload 2>&1 | tee "$LOG_FILE"

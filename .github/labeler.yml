@@ -1,17 +1,32 @@
 area:web:
-  - 'web/**'
+  - changed-files:
+      - any-glob-to-any-file: 'web/**'
+
 area:backend:
-  - 'python/**'
+  - changed-files:
+      - any-glob-to-any-file: 'python/**'
+
 docs:
-  - 'docs/**'
-  - 'README.md'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - 'README.md'
+
 ci:
-  - '.github/**'
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
 scripts:
-  - 'scripts/**'
+  - changed-files:
+      - any-glob-to-any-file: 'scripts/**'
+
 resources:
-  - 'resources/**'
+  - changed-files:
+      - any-glob-to-any-file: 'resources/**'
+
 dependencies:
-  - 'pnpm-lock.yaml'
-  - 'python/pyproject.toml'
-  - 'web/package.json'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'pnpm-lock.yaml'
+          - 'python/pyproject.toml'
+          - 'web/package.json'

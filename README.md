@@ -3,7 +3,13 @@
 ![CI](https://github.com/tetsuose/LingoView/actions/workflows/ci.yml/badge.svg)
 ![CodeQL](https://github.com/tetsuose/LingoView/actions/workflows/codeql.yml/badge.svg)
 
-LingoView 是一款面向语言学习的字幕生成与翻译工具，使用 Python (FastAPI) 后端 + React/Vite 前端架构。项目提供本地 `faster-whisper` 字幕生成、OpenAI 翻译、词法分析与离线词典构建能力。
+LingoView 是一款面向语言学习的字幕生成与翻译工具，使用 Python (FastAPI) 后端 + React/Vite 前端架构。
+
+**核心特性**：
+- **本地字幕生成**：基于 `faster-whisper` 和 WebRTC VAD 的高效语音识别。
+- **AI 语境词典**：点击字幕单词，即时获取基于当前语境的 AI 释义、发音和例句（支持本地缓存）。
+- **现代 UI 设计**：Apple 风格的毛玻璃界面，提供沉浸式的双栏（视频/字幕）学习体验。
+- **多模型支持**：支持 OpenAI、DeepSeek、Grok 等多种 LLM 用于翻译和查词。
 
 ## 目录结构
 
