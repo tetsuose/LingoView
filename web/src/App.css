@@ -160,30 +160,31 @@ button {
 .app__content {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
-  gap: 1.5rem;
-  /* Reduced gap */
-  padding: 1.5rem;
-  /* Reduced padding */
+  gap: 2rem;
+  padding: 1.75rem 2rem;
   align-items: start;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
+  /* Ensure full height */
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: visible; Default, allows page scroll */
 }
 
 .app__main-column {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  /* Reduced gap */
+  gap: 1.5rem;
   padding-right: 0.5rem;
-  height: 100%;
-  overflow: hidden;
+  /* Natural flow, expands page height */
 }
 
 .app__side-column {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  position: sticky;
+  top: 90px;
+  /* Stick to top below header */
+  height: calc(100vh - 120px);
+  /* Fixed height relative to viewport */
   overflow: hidden;
   /* Container for subtitle list */
 }
@@ -192,23 +193,17 @@ button {
   background: var(--card-bg);
   border-radius: var(--border-radius);
   box-shadow: var(--card-shadow);
-  padding: 1rem;
-  /* Compact padding */
+  padding: 1.5rem;
   transition: transform 0.2s ease;
-  max-height: 150px;
-  /* Limit height */
-  overflow-y: auto;
-  flex: 0 0 auto;
-  /* Don't grow or shrink */
+  /* Natural flow in left column */
 }
 
 .downloads h2 {
   margin: 0;
-  font-size: 0.9rem;
-  /* Smaller header */
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .downloads ul {
@@ -218,13 +213,13 @@ button {
 }
 
 .downloads li+li {
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
 }
 
 .downloads a {
   color: var(--accent-color);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   display: inline-block;
   transition: opacity 0.2s ease;
 }
@@ -238,16 +233,15 @@ button {
   box-shadow: none;
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: rgba(255, 255, 255, 0.5);
-  margin-top: 0;
+  margin-top: 1rem;
 }
 
 .app__player-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
-  flex: 0 0 auto;
-  /* Fixed size */
+  /* Natural flow */
 }
 
 .video-player {
