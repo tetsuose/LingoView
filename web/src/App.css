@@ -167,7 +167,7 @@ button {
   /* Fixed viewport height */
   box-sizing: border-box;
   overflow: hidden;
-  /* CRITICAL: Prevent page scroll when children scroll */
+  /* Prevent page scroll so subtitle scroll doesn't move page */
 }
 
 .app__main-column {
@@ -176,8 +176,9 @@ button {
   gap: 1.5rem;
   padding-right: 0.5rem;
   height: 100%;
-  overflow: hidden;
-  /* Contain children */
+  overflow-y: auto;
+  /* Allow Left Column to scroll internally if content is tall */
+  /* Fill container */
 }
 
 .app__side-column {
@@ -194,9 +195,6 @@ button {
   box-shadow: var(--card-shadow);
   padding: 1.5rem;
   transition: transform 0.2s ease;
-  max-height: 150px;
-  overflow-y: auto;
-  /* Independent scroll for downloads */
   flex-shrink: 0;
 }
 
@@ -235,8 +233,8 @@ button {
   box-shadow: none;
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: rgba(255, 255, 255, 0.5);
-  margin-top: 0;
-  /* Let flex gap handle spacing */
+  margin-top: auto;
+  /* Push to bottom */
 }
 
 .app__player-section {
