@@ -169,7 +169,8 @@ function App(): ReactElement {
     const video = videoRef.current;
     if (!video) return;
     const target = segments[index];
-    video.currentTime = Math.max(0, target.start - 0.05);
+    // Jump 0.5s before the start time to ensure the beginning of the speech is heard
+    video.currentTime = Math.max(0, target.start - 0.5);
     video.play().catch(() => undefined);
   };
 
