@@ -163,27 +163,29 @@ button {
   gap: 2rem;
   padding: 1.75rem 2rem;
   align-items: start;
-  height: calc(100vh - 80px);
-  /* Fixed height for split pane */
+  /* Removed fixed height to allow page scrolling */
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .app__main-column {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  overflow-y: auto;
-  /* Independent scrolling for left column */
   padding-right: 0.5rem;
-  height: 100%;
+  /* Sticky Left Column */
+  position: sticky;
+  top: 90px;
+  align-self: start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
 }
 
 .app__side-column {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow: hidden;
+  /* Natural flow for Right Column */
+  height: auto;
+  overflow: visible;
 }
 
 .downloads {
@@ -237,6 +239,7 @@ button {
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
+  /* Removed sticky, handled by parent */
 }
 
 .video-player {
@@ -270,10 +273,9 @@ button {
   box-shadow: var(--card-shadow);
   padding: 1.5rem;
   flex: 1;
-  overflow-y: auto;
-  height: 100%;
-  padding-bottom: 50vh;
-  scroll-behavior: smooth;
+  /* Allow natural expansion */
+  height: auto;
+  overflow: visible;
 }
 
 .subtitle-item {
