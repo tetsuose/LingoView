@@ -163,8 +163,11 @@ button {
   gap: 2rem;
   padding: 1.75rem 2rem;
   align-items: start;
-  /* Removed fixed height to allow page scrolling */
+  height: calc(100vh - 80px);
+  /* Fixed viewport height */
   box-sizing: border-box;
+  overflow: auto;
+  /* Main page scrollbar if content overflows min-heights */
 }
 
 .app__main-column {
@@ -172,20 +175,16 @@ button {
   flex-direction: column;
   gap: 1.5rem;
   padding-right: 0.5rem;
-  /* Sticky Left Column */
-  position: sticky;
-  top: 90px;
-  align-self: start;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
+  height: 100%;
+  /* Fill container */
 }
 
 .app__side-column {
   display: flex;
   flex-direction: column;
-  /* Natural flow for Right Column */
-  height: auto;
-  overflow: visible;
+  height: 100%;
+  overflow: hidden;
+  /* Container for subtitle list */
 }
 
 .downloads {
@@ -194,6 +193,10 @@ button {
   box-shadow: var(--card-shadow);
   padding: 1.5rem;
   transition: transform 0.2s ease;
+  max-height: 200px;
+  overflow-y: auto;
+  /* Independent scroll for downloads */
+  flex-shrink: 0;
 }
 
 .downloads h2 {
@@ -231,7 +234,8 @@ button {
   box-shadow: none;
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: rgba(255, 255, 255, 0.5);
-  margin-top: 1rem;
+  margin-top: auto;
+  /* Push to bottom if space allows */
 }
 
 .app__player-section {
@@ -239,7 +243,8 @@ button {
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
-  /* Removed sticky, handled by parent */
+  flex-shrink: 0;
+  /* Video player shouldn't shrink */
 }
 
 .video-player {
@@ -273,9 +278,10 @@ button {
   box-shadow: var(--card-shadow);
   padding: 1.5rem;
   flex: 1;
-  /* Allow natural expansion */
-  height: auto;
-  overflow: visible;
+  height: 100%;
+  overflow-y: auto;
+  /* Independent scroll for subtitles */
+  scroll-behavior: smooth;
 }
 
 .subtitle-item {
