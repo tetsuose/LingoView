@@ -163,24 +163,25 @@ button {
   gap: 2rem;
   padding: 1.75rem 2rem;
   align-items: start;
-  height: calc(100vh - 80px);
-  /* Fixed height for scrolling */
+  /* Removed fixed height to allow page scrolling */
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .app__main-column {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  overflow-y: auto;
+  /* Removed internal scrolling */
   padding-right: 0.5rem;
 }
 
 .app__side-column {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* Make sidebar sticky so it stays visible while scrolling main content */
+  position: sticky;
+  top: 90px;
+  height: calc(100vh - 120px);
   overflow: hidden;
 }
 
