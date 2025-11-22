@@ -236,6 +236,13 @@ button {
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
+  position: sticky;
+  top: 90px;
+  z-index: 10;
+  background: var(--bg-color);
+  /* Prevent transparency issues when scrolling */
+  padding-bottom: 1rem;
+  /* Add some spacing */
 }
 
 .video-player {
