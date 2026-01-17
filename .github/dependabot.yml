@@ -1,14 +1,15 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/web"
+    directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "chore(web): deps"
+      prefix: "chore(deps):"
     labels:
-      - "deps:web"
+      - "dependencies"
+      - "javascript"
 
   - package-ecosystem: "pip"
     directory: "/python"
@@ -16,6 +17,6 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "chore(python): deps"
+      prefix: "chore(deps):"
     labels:
-      - "deps:python"
+      - "dependencies"
